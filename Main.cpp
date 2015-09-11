@@ -19,12 +19,12 @@ int main()
 	Utils::CreateConsole("debug");
 	
 	char mapname[128];
-	
 #ifdef _DEBUG
 	strcpy(mapname, "de_nuke.bsp");
 #else
 	printf("Please enter the name of the BSP file you want to view: ");
-	scanf("%127s", mapname);
+	//scanf("%127s", mapname);
+        strcpy(mapname, "de_nuke.bsp");
 #endif
 
 	/* Initialize Engine & create new window */
