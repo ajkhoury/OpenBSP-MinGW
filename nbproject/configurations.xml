@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="95">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+      <itemPath>Atlas.h</itemPath>
+      <itemPath>Bsp.h</itemPath>
+      <itemPath>BspRenderer.h</itemPath>
+      <itemPath>Camera.h</itemPath>
+      <itemPath>Color.h</itemPath>
+      <itemPath>Engine.h</itemPath>
+      <itemPath>Entity.h</itemPath>
+      <itemPath>Font.h</itemPath>
+      <itemPath>Main.h</itemPath>
+      <itemPath>Shader.h</itemPath>
+      <itemPath>ShaderManager.h</itemPath>
+      <itemPath>SharedDefs.h</itemPath>
+      <itemPath>TextRenderer.h</itemPath>
+      <itemPath>Utils.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ResourceFiles"
+                   displayName="Resource Files"
+                   projectFiles="true">
+      <logicalFolder name="lib" displayName="lib" projectFiles="true">
+        <logicalFolder name="Freetype" displayName="Freetype" projectFiles="true">
+          <itemPath>lib/Freetype/libfreetype-6.dll</itemPath>
+          <itemPath>lib/Freetype/libfreetype.a</itemPath>
+          <itemPath>lib/Freetype/libfreetype.dll.a</itemPath>
+        </logicalFolder>
+        <logicalFolder name="GLEW" displayName="GLEW" projectFiles="true">
+          <itemPath>lib/GLEW/glew32.dll</itemPath>
+          <itemPath>lib/GLEW/glew32mx.dll</itemPath>
+          <itemPath>lib/GLEW/libglew32.a</itemPath>
+          <itemPath>lib/GLEW/libglew32.dll.a</itemPath>
+          <itemPath>lib/GLEW/libglew32mx.a</itemPath>
+          <itemPath>lib/GLEW/libglew32mx.dll.a</itemPath>
+        </logicalFolder>
+        <logicalFolder name="GLFW" displayName="GLFW" projectFiles="true">
+          <itemPath>lib/GLFW/glfw3.dll</itemPath>
+          <itemPath>lib/GLFW/glfw3dll.a</itemPath>
+          <itemPath>lib/GLFW/libglfw3.a</itemPath>
+        </logicalFolder>
+      </logicalFolder>
+      <itemPath>arial.ttf</itemPath>
+      <itemPath>basic_shader.frag</itemPath>
+      <itemPath>basic_shader.vert</itemPath>
+      <itemPath>de_nuke.bsp</itemPath>
+      <itemPath>fixedsys.ttf</itemPath>
+      <itemPath>text_shader.frag</itemPath>
+      <itemPath>text_shader.vert</itemPath>
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+      <itemPath>Atlas.cpp</itemPath>
+      <itemPath>Bsp.cpp</itemPath>
+      <itemPath>BspRenderer.cpp</itemPath>
+      <itemPath>Camera.cpp</itemPath>
+      <itemPath>Color.cpp</itemPath>
+      <itemPath>Engine.cpp</itemPath>
+      <itemPath>Entity.cpp</itemPath>
+      <itemPath>Font.cpp</itemPath>
+      <itemPath>Main.cpp</itemPath>
+      <itemPath>Shader.cpp</itemPath>
+      <itemPath>ShaderManager.cpp</itemPath>
+      <itemPath>TextRenderer.cpp</itemPath>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceRootList>
+    <Elem>lib</Elem>
+    <Elem>lib</Elem>
+    <Elem>lib</Elem>
+    <Elem>lib</Elem>
+  </sourceRootList>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="1">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <ccTool>
+          <incDir>
+            <pElem>include</pElem>
+            <pElem>glm</pElem>
+            <pElem>include/Freetype</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>_DEBUG</Elem>
+          </preprocessorList>
+        </ccTool>
+        <linkerTool>
+          <linkerAddLib>
+            <pElem>lib/GLFW</pElem>
+            <pElem>lib/GLEW</pElem>
+            <pElem>include</pElem>
+            <pElem>lib/Freetype</pElem>
+          </linkerAddLib>
+          <linkerLibItems>
+            <linkerLibLibItem>glfw3</linkerLibLibItem>
+            <linkerLibLibItem>glew32</linkerLibLibItem>
+            <linkerLibLibItem>opengl32</linkerLibLibItem>
+            <linkerLibLibItem>glu32</linkerLibLibItem>
+            <linkerLibLibItem>gdi32</linkerLibLibItem>
+            <linkerLibLibItem>freetype</linkerLibLibItem>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+      <item path="Atlas.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Atlas.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Bsp.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Bsp.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="BspRenderer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="BspRenderer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Camera.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Camera.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Color.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Color.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Engine.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Engine.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Entity.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Entity.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Font.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Font.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Main.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Shader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Shader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ShaderManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShaderManager.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SharedDefs.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TextRenderer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TextRenderer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Utils.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="arial.ttf" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="basic_shader.frag" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="basic_shader.vert" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="de_nuke.bsp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="fixedsys.ttf" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/Freetype/libfreetype-6.dll" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/Freetype/libfreetype.a" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/Freetype/libfreetype.dll.a" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/GLEW/glew32.dll" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/GLEW/glew32mx.dll" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/GLEW/libglew32.a" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/GLEW/libglew32.dll.a" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/GLEW/libglew32mx.a" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/GLEW/libglew32mx.dll.a" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/GLFW/glfw3.dll" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/GLFW/glfw3dll.a" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/GLFW/libglfw3.a" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="text_shader.frag" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="text_shader.vert" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release" type="1">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+          <incDir>
+            <pElem>include</pElem>
+            <pElem>glm</pElem>
+            <pElem>include/Freetype</pElem>
+          </incDir>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+        <linkerTool>
+          <linkerAddLib>
+            <pElem>lib/GLFW</pElem>
+            <pElem>lib/GLEW</pElem>
+            <pElem>include</pElem>
+            <pElem>lib/Freetype</pElem>
+          </linkerAddLib>
+          <linkerLibItems>
+            <linkerLibLibItem>glfw3</linkerLibLibItem>
+            <linkerLibLibItem>glew32</linkerLibLibItem>
+            <linkerLibLibItem>opengl32</linkerLibLibItem>
+            <linkerLibLibItem>glu32</linkerLibLibItem>
+            <linkerLibLibItem>gdi32</linkerLibLibItem>
+            <linkerLibLibItem>freetype</linkerLibLibItem>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+      <item path="Atlas.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Atlas.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Bsp.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Bsp.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="BspRenderer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="BspRenderer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Camera.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Camera.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Color.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Color.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Engine.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Engine.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Entity.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Entity.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Font.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Font.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Main.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Shader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Shader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ShaderManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ShaderManager.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SharedDefs.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TextRenderer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TextRenderer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Utils.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="arial.ttf" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="basic_shader.frag" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="basic_shader.vert" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="de_nuke.bsp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="fixedsys.ttf" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/Freetype/libfreetype-6.dll" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/Freetype/libfreetype.a" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/Freetype/libfreetype.dll.a" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/GLEW/glew32.dll" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/GLEW/glew32mx.dll" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/GLEW/libglew32.a" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/GLEW/libglew32.dll.a" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/GLEW/libglew32mx.a" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/GLEW/libglew32mx.dll.a" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/GLFW/glfw3.dll" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/GLFW/glfw3dll.a" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/GLFW/libglfw3.a" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="text_shader.frag" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="text_shader.vert" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>
