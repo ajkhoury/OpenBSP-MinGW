@@ -112,7 +112,7 @@ public:
     };
     
     std::vector<Vertex> vertices; // map verts
-    std::vector<Vertex> mapNormals; // map normals
+    std::vector<Vertex> normals; // map normals
     
     struct StaticPropLump
     {

@@ -91,56 +91,56 @@ Bsp::Bsp(const char* fp)
 
 	
 	/* Game Lumps */
-	map.seekg(header.lumps[LUMP_GAME_LUMP].offset, std::ios_base::beg);
-	GameLumpHeader* pGameLumpHdr = (GameLumpHeader*)malloc(header.lumps[LUMP_GAME_LUMP].length);
-	map.read((char*)pGameLumpHdr, header.lumps[LUMP_GAME_LUMP].length);
-	
-	GameLumpInfo* pGameLumps = (GameLumpInfo*)(pGameLumpHdr + 1);
-	
-	for (int i = 0; i < pGameLumpHdr->lumpCount; i++)
-	{
-		if (pGameLumps[i].id == SPRP) // static props
-		{
-			printf("SPRP offset: 0x%X  length: 0x%X\n", pGameLumps[i].offset, pGameLumps[i].length);
-			int* dictEntries = (int*)((char*)pGameLumpHdr + (pGameLumps[i].offset - header.lumps[LUMP_GAME_LUMP].offset));
-			numPropDictEntries = *dictEntries;
-			printf("numPropDictEntries: %i\n", numPropDictEntries);
-			pStaticPropDict = (StaticPropDictLump*)(dictEntries + 1);
-			
-			printf("StaticPropDictLump: \n");
-			for (int i = 0; i < numPropDictEntries; i++)
-			{
-				printf("   [%i] %s\n", i, pStaticPropDict[i].name);
-			}
-			
-			int* leafEntries = (int*)(pStaticPropDict + numPropDictEntries);
-			numPropLeafEntries = *leafEntries;
-			pStaticPropLeaf = (StaticPropLeafLump*)(leafEntries + 1);
-			
-			int* lumpEntries = (int*)(pStaticPropLeaf + numPropLeafEntries);
-			numPropLumpEntries = *lumpEntries;
-			printf("StaticPropLump: 0x%X  numPropLumpEntries: %i\n", lumpEntries, numPropLumpEntries);
-			pStaticPropLumps = (StaticPropLump*)(lumpEntries + 1);
-			
-			for (int j = 0; j < numPropLumpEntries; j++)
-			{
-				PropInfo info;
-				info.name = pStaticPropDict[pStaticPropLumps[j].PropType].name;
-				printf("Prop name: %s\n", info.name);
-				info.origin = glm::vec3(pStaticPropLumps[j].Origin.x, pStaticPropLumps[j].Origin.y, pStaticPropLumps[j].Origin.z);
-				info.angles = glm::vec3(pStaticPropLumps[j].Angles.x, pStaticPropLumps[j].Angles.y, pStaticPropLumps[j].Angles.z);
-				info.firstLeaf = pStaticPropLumps[j].FirstLeaf;
-				info.leafCount = pStaticPropLumps[j].LeafCount;
-				m_propInfo.push_back(info);
-			}
-		}
-	}
+	//map.seekg(header.lumps[LUMP_GAME_LUMP].offset, std::ios_base::beg);
+	//GameLumpHeader* pGameLumpHdr = (GameLumpHeader*)malloc(header.lumps[LUMP_GAME_LUMP].length);
+	//map.read((char*)pGameLumpHdr, header.lumps[LUMP_GAME_LUMP].length);
+	//
+	//GameLumpInfo* pGameLumps = (GameLumpInfo*)(pGameLumpHdr + 1);
+	//
+	//for (int i = 0; i < pGameLumpHdr->lumpCount; i++)
+	//{
+	//	if (pGameLumps[i].id == SPRP) // static props
+	//	{
+	//		printf("SPRP offset: 0x%X  length: 0x%X\n", pGameLumps[i].offset, pGameLumps[i].length);
+	//		int* dictEntries = (int*)((char*)pGameLumpHdr + (pGameLumps[i].offset - header.lumps[LUMP_GAME_LUMP].offset));
+	//		numPropDictEntries = *dictEntries;
+	//		printf("numPropDictEntries: %i\n", numPropDictEntries);
+	//		pStaticPropDict = (StaticPropDictLump*)(dictEntries + 1);
+	//		
+	//		printf("StaticPropDictLump: \n");
+	//		for (int i = 0; i < numPropDictEntries; i++)
+	//		{
+	//			printf("   [%i] %s\n", i, pStaticPropDict[i].name);
+	//		}
+	//		
+	//		int* leafEntries = (int*)(pStaticPropDict + numPropDictEntries);
+	//		numPropLeafEntries = *leafEntries;
+	//		pStaticPropLeaf = (StaticPropLeafLump*)(leafEntries + 1);
+	//		
+	//		int* lumpEntries = (int*)(pStaticPropLeaf + numPropLeafEntries);
+	//		numPropLumpEntries = *lumpEntries;
+	//		printf("StaticPropLump: 0x%X  numPropLumpEntries: %i\n", lumpEntries, numPropLumpEntries);
+	//		pStaticPropLumps = (StaticPropLump*)(lumpEntries + 1);
+	//		
+	//		for (int j = 0; j < numPropLumpEntries; j++)
+	//		{
+	//			PropInfo info;
+	//			info.name = pStaticPropDict[pStaticPropLumps[j].PropType].name;
+	//			printf("Prop name: %s\n", info.name);
+	//			info.origin = glm::vec3(pStaticPropLumps[j].Origin.x, pStaticPropLumps[j].Origin.y, pStaticPropLumps[j].Origin.z);
+	//			info.angles = glm::vec3(pStaticPropLumps[j].Angles.x, pStaticPropLumps[j].Angles.y, pStaticPropLumps[j].Angles.z);
+	//			info.firstLeaf = pStaticPropLumps[j].FirstLeaf;
+	//			info.leafCount = pStaticPropLumps[j].LeafCount;
+	//			m_propInfo.push_back(info);
+	//		}
+	//	}
+	//}
 	
 	
 	// close the BSP file
 	map.close();
 	
-	mapNormals.resize(vertices.size(), Vertex(0,0,0));
+	normals.resize(vertices.size(), Vertex(0,0,0));
 }
 
 void Bsp::LoadMapDetails(Camera* cam)
@@ -162,7 +162,7 @@ void Bsp::LoadMapDetails(Camera* cam)
 	LoadBSP(0, /*curLeaf,*/ position);
 	worldSize = indices.size();
 	LoadBrushEntities();
-	LoadProps();
+	//LoadProps();
 }
 
 void Bsp::LoadBSP(int node, /*int leaf,*/ glm::vec3 pos)
@@ -241,12 +241,16 @@ void Bsp::LoadFace(int face)
 			secondPoint = edges[edgeIndex].vert[1]; 
 		}
 	
-		/* still trying to fix normals */
-		mapNormals[hub]			= planes[faces[face].planeIndex].normal;
-		mapNormals[firstPoint]	= planes[faces[face].planeIndex].normal;
-		mapNormals[secondPoint]	= planes[faces[face].planeIndex].normal;
+        // normal
+        Vertex vNormal = planes[faces[face].planeIndex].normal;
+        if (faces[face].side)
+            vNormal = vNormal * -1;
+        
+        normals[hub] = vNormal;
+        normals[firstPoint] = vNormal;
+        normals[secondPoint] = vNormal;
 
-		// push back every single index 
+		// push back every index 
 		indices.push_back(hub);
 		indices.push_back(firstPoint);
 		indices.push_back(secondPoint);
@@ -397,7 +401,7 @@ void Bsp::RenderBrushEntities(int uniformModel, int uniformColor)
         
         //glUniform4f(uniformColor, 1.0f, 1.0f, 1.0f, 1.0f); // white
         //glDrawElements(GL_TRIANGLES, info.length, GL_UNSIGNED_INT, (void*)(info.startIndex * sizeof(GLuint)));
-        glUniform4f(uniformColor, 0.0f, 0.0f, 0.75f, 1.0f); // blue
+        glUniform4fv(uniformColor, 1, glm::value_ptr(glm::vec4(0.0f, 0.0f, 0.75f, 1.0f))); // blue
         glDrawElements(GL_LINE_LOOP, info.length, GL_UNSIGNED_INT, (void*)(info.startIndex * sizeof(GLuint)));
         
 	}

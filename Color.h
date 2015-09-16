@@ -19,6 +19,7 @@ public:
     
     float* Base();
     
+    static float white[4];
     static float black[4];
 	static float red[4];
 	static float transparent_green[4];

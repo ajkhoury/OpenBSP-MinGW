@@ -34,11 +34,17 @@ private:
     
     GLuint m_vao, m_vbo, m_normalVBO, m_ebo;
     
+    GLint m_MVPUniform;
+    GLint m_modelUniform;
     GLint m_viewUniform;
 	GLint m_projectionUniform;
-	GLint m_modelUniform;
+    
+	GLint m_lightUniform;
+    GLint m_lightFragUniform;
+    
 	GLint m_useUserColorUniform;
 	GLint m_userColorUniform;
+    
     GLint m_positionAttribute;
     GLint m_normalPositionAttribute;
     

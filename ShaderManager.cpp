@@ -90,6 +90,7 @@ Shader* ShaderManager::Load(const char* inVertexFilename, const char* inFragment
 	// load and compile vertex. geometric and fragment sources
 	loadStatus = LoadShader(GL_VERTEX_SHADER, inVertexFilename, vertShader);
 	loadStatus &= LoadShader(GL_FRAGMENT_SHADER, inFragmentFilename, fragShader);
+    
 	// if geometry file is provided, load it
 	if (inGeometryFilename)
 		loadStatus &= LoadShader(GL_GEOMETRY_SHADER_EXT, inGeometryFilename, geomShader);
@@ -171,7 +172,7 @@ void ShaderManager::Dispose(Shader* inShader)
 
 bool ShaderManager::LoadShader(unsigned int inShaderType, const std::string& inFileName, GLuint &inOutShader)
 {
-	// Read the shaders.
+	// Read the shaders
 	std::ifstream ifs(inFileName.c_str());
 	std::stringstream vss;
 	vss << ifs.rdbuf();

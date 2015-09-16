@@ -55,7 +55,7 @@ int main()
 	
 	/* Set the default text font to use */
 	TextRenderer::GetInstance()->SetFont("Arial", 12);
-	
+    
 	glm::vec3 pos;
 
 	while (!glfwWindowShouldClose(g_pEngine->Window()))

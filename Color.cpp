@@ -7,6 +7,7 @@
 
 #include "Color.h"
 
+float Color::white[4] = { 1, 1, 1, 1 };
 float Color::black[4] = { 0, 0, 0, 1 };
 float Color::red[4] = { 1, 0, 0, 1 };
 float Color::transparent_green[4] = { 0, 1, 0, 0.5f };
