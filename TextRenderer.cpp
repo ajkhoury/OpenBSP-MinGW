@@ -117,7 +117,7 @@ void TextRenderer::RenderText(Atlas* a, float screenx, float screeny, float scal
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ARRAY_BUFFER, coords.size() * sizeof(glm::vec4), coords.data(), GL_DYNAMIC_DRAW);
 
-	/* Generate VAO */
+	/* Bind VAO */
 	glBindVertexArray(vao);
 	
 	/* Coords (Position) */

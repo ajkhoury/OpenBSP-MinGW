@@ -24,7 +24,7 @@ int main()
 #else
 	printf("Please enter the name of the BSP file you want to view: ");
 	//scanf("%127s", mapname);
-        strcpy(mapname, "de_nuke.bsp");
+        strcpy(mapname, "de_dust2.bsp");
 #endif
 
 	/* Initialize Engine & create new window */

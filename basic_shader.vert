@@ -22,7 +22,7 @@ void main()
     worldPosition = (model * vec4(position, 1)).xyz;
 
     vec3 vertexPositionCameraspace = ( view * model * vec4(position, 1)).xyz;
-    eyeDirection = vec3(0,0,0) - vertexPositionCameraspace;
+    eyeDirection = -vertexPositionCameraspace;
 
     vec3 lightPositionCameraspace = ( view * vec4(lightPosition, 1)).xyz;
     lightDirection = lightPositionCameraspace + eyeDirection;

@@ -140,7 +140,7 @@ Bsp::Bsp(const char* fp)
 	// close the BSP file
 	map.close();
 	
-	normals.resize(vertices.size(), Vertex(0,0,0));
+	normals.resize(vertices.size(), glm::vec3(0,0,0));
 }
 
 void Bsp::LoadMapDetails(Camera* cam)
@@ -221,11 +221,11 @@ void Bsp::LoadFace(int face)
 	int hub; // if it is the first run through the first vertex is the "hub" index that all of the triangles in the plane will refer to
 	int firstPoint; // the first point after the hub
 	int secondPoint; // last point to create a full triangle
-	
-	// 8 and 9, 20 and 21, 12, and 13, 24 and 25, 38 and 39, 
-	for (int x = 0; x < faces[face].numEdges; x++) // loop through every single edge in a face, this will end up making a triangle fan
+
+    // loop through every single edge in a face, this will end up making a triangle fan
+	for (int x = 0; x < faces[face].numEdges; x++) 
 	{
-		int edgeIndex = surfEdges[faces[face].firstEdge + x]; // Edge index
+		int edgeIndex = surfEdges[faces[face].firstEdge + x];
 		if (edgeIndex < 0)
 		{
 			if (x == 0)
@@ -242,9 +242,9 @@ void Bsp::LoadFace(int face)
 		}
 	
         // normal
-        Vertex vNormal = planes[faces[face].planeIndex].normal;
-        if (faces[face].side)
-            vNormal = vNormal * -1;
+        glm::vec3 vNormal = planes[faces[face].planeIndex].normal;
+        //if (faces[face].side)
+           // vNormal = -vNormal;
         
         normals[hub] = vNormal;
         normals[firstPoint] = vNormal;
@@ -383,7 +383,7 @@ void Bsp::LoadBrushEntities()
 	}
 }
 
-void Bsp::RenderBrushEntities(int uniformModel, int uniformColor)
+void Bsp::RenderBrushEntities(int uniformModel, int uniformColor, int useUserColorUniform)
 {
 	for (int i = 0; i < nBrushEntities; i++)
 	{
@@ -396,14 +396,14 @@ void Bsp::RenderBrushEntities(int uniformModel, int uniformColor)
 			continue;
 		
 		ModelInfo info = it->second;
-		
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(info.matrix));
         
         //glUniform4f(uniformColor, 1.0f, 1.0f, 1.0f, 1.0f); // white
         //glDrawElements(GL_TRIANGLES, info.length, GL_UNSIGNED_INT, (void*)(info.startIndex * sizeof(GLuint)));
+        glUniform1i(useUserColorUniform, GL_TRUE);
         glUniform4fv(uniformColor, 1, glm::value_ptr(glm::vec4(0.0f, 0.0f, 0.75f, 1.0f))); // blue
         glDrawElements(GL_LINE_LOOP, info.length, GL_UNSIGNED_INT, (void*)(info.startIndex * sizeof(GLuint)));
-        
+        glUniform1i(useUserColorUniform, GL_FALSE);
 	}
 }
 
@@ -593,12 +593,12 @@ bool Bsp::PointIsInside(glm::vec3 pos, short min[3], short max[3])
 		return false;
 }
 
-float Bsp::DotProduct(Vertex a, glm::vec3 b)
+float Bsp::DotProduct(glm::vec3 a, glm::vec3 b)
 {
 	return  (a.x * b.x + a.y * b.y + a.z * b.z);
 }
 
-void Bsp::CrossProduct(const Vertex v1, const Vertex v2, Vertex& cross)
+void Bsp::CrossProduct(const glm::vec3 v1, const glm::vec3 v2, glm::vec3& cross)
 {
 	cross.x = v1.y * v2.z - v1.z * v2.y;
 	cross.y = v1.z * v2.x - v1.x * v2.z;

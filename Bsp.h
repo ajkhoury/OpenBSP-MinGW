@@ -47,8 +47,7 @@ public:
         LUMP_FACE_MACRO_TEXTURE_INFO,   LUMP_DISP_TRIS,                 LUMP_PHYSCOLLIDESURFACE,    LUMP_PROP_BLOB,     LUMP_WATEROVERLAYS, LUMP_LIGHTMAPPAGES, LUMP_LEAF_AMBIENT_INDEX_HDR,    LUMP_LIGHTMAPPAGEINFOS,     LUMP_LEAF_AMBIENT_INDEX,    LUMP_LIGHTING_HDR,
         LUMP_WORLDLIGHTS_HDR,           LUMP_LEAF_AMBIENT_LIGHTING_HDR, LUMP_LEAF_AMBIENT_LIGHTING, LUMP_XZIPPAKFILE,   LUMP_FACES_HDR,     LUMP_MAP_FLAGS,     LUMP_OVERLAY_FADES,             LUMP_OVERLAY_SYSTEM_LEVELS, LUMP_PHYSLEVEL,             LUMP_DISP_MULTIBLEND
     };
-
-
+    
     // Contains the info of every lump (offset from beginning of file, length of lump, version (usually 0), and identification (usually 0)
     struct LumpInfo
     {
@@ -93,32 +92,32 @@ public:
     };
 
     // Vertex struct
-    struct Vertex
-    {
-        // cleaner usage of verts
-        Vertex() { };
-        Vertex(float a, float b, float c) { x = a; y = b; z = c; };
-        Vertex pos() { return Vertex(x, y, z); };
-        Vertex& operator=(const Vertex& vec) {  x=vec.x; y=vec.y; z=vec.z; }
-        Vertex& operator=(const glm::vec3& vec) {  x=vec.x; y=vec.y; z=vec.z; }
-        Vertex& operator+=(const Vertex& vec) {  x+=vec.x; y+=vec.y; z+=vec.z; return *this; }
-        Vertex& operator-=(const Vertex& vec) {  x-=vec.x; y-=vec.y; z-=vec.z; return *this; }
-        float& operator[](int i) { switch (i) { case 0: return x; case 1: return y; case 2: return z; } }
-        Vertex operator+(Vertex vec) const { return Vertex(x + vec.x, y + vec.y, z + vec.z); }
-        Vertex operator-(Vertex vec) const { return Vertex(x - vec.x, y - vec.y, z - vec.z); }
-        Vertex operator*(float scalar) const { return Vertex(x * scalar, y * scalar, z * scalar); }
-        
-        float x, y, z;  
-    };
+    //struct Vertex
+    //{
+    //    // cleaner usage of verts
+    //    Vertex() { };
+    //    Vertex(float a, float b, float c) { x = a; y = b; z = c; };
+    //    Vertex pos() { return Vertex(x, y, z); };
+    //    Vertex& operator=(const Vertex& vec) {  x=vec.x; y=vec.y; z=vec.z; }
+    //    Vertex& operator=(const glm::vec3& vec) {  x=vec.x; y=vec.y; z=vec.z; }
+    //    Vertex& operator+=(const Vertex& vec) {  x+=vec.x; y+=vec.y; z+=vec.z; return *this; }
+    //    Vertex& operator-=(const Vertex& vec) {  x-=vec.x; y-=vec.y; z-=vec.z; return *this; }
+    //    float& operator[](int i) { switch (i) { case 0: return x; case 1: return y; case 2: return z; } }
+    //    Vertex operator+(Vertex vec) const { return Vertex(x + vec.x, y + vec.y, z + vec.z); }
+    //    Vertex operator-(Vertex vec) const { return Vertex(x - vec.x, y - vec.y, z - vec.z); }
+    //    Vertex operator*(float scalar) const { return Vertex(x * scalar, y * scalar, z * scalar); }
+    //    
+    //    float x, y, z;  
+    //};
     
-    std::vector<Vertex> vertices; // map verts
-    std::vector<Vertex> normals; // map normals
+    std::vector<glm::vec3> vertices; // map verts
+    std::vector<glm::vec3> normals; // map normals
     
     struct StaticPropLump
     {
         // v4
-        Vertex          Origin;		 // origin
-        Vertex          Angles;		 // orientation (pitch roll yaw)
+        glm::vec3       Origin;		 // origin
+        glm::vec3       Angles;		 // orientation (pitch roll yaw)
         unsigned short	PropType;	 // index into model name dictionary
         unsigned short	FirstLeaf;	 // index into leaf array
         unsigned short	LeafCount;
@@ -127,7 +126,7 @@ public:
         int             Skin;		 // model skin numbers
         float           FadeMinDist;
         float           FadeMaxDist;
-        Vertex          LightingOrigin;  // for lighting
+        glm::vec3       LightingOrigin;  // for lighting
         // since v5
         float           ForcedFadeScale; // fade distance scale
         // v6 and v7 only
@@ -168,7 +167,7 @@ public:
     
     struct Plane
     {
-        Vertex normal;
+        glm::vec3 normal;
         float distance;
         int type;
     };
@@ -230,7 +229,7 @@ public:
     {
         float nMins[3]; // Defines bounding box mins
         float nMaxs[3]; // Defines bounding box maxs
-        Vertex vOrigin; // Coordinates to move the coordinate system before drawing the model
+        glm::vec3 vOrigin; // Coordinates to move the coordinate system before drawing the model
         int iHeadNode; // Index into nodes array
         int iFirstFace, nFaces; // Index and count into face array
     };
@@ -295,7 +294,7 @@ public:
     void RenderProps(int uniformModel, int uniformColor);
     
     void LoadBrushEntities();
-    void RenderBrushEntities(int uniformModel, int uniformColor);
+    void RenderBrushEntities(int uniformModel, int uniformColor, int useUserColorUniform);
     void RenderBrushEntityNames(Camera* cam, GLfloat color[]);
     
 private:
@@ -306,8 +305,8 @@ private:
     void LoadBSP(int node, /*int leaf,*/ glm::vec3 pos);
     void LoadLeaf(int leaf);
     void LoadFace(int face);
-    float DotProduct(Vertex normal, glm::vec3 b);
-    void CrossProduct(const Vertex v1, const Vertex v2, Vertex& cross);
+    float DotProduct(glm::vec3 normal, glm::vec3 b);
+    void CrossProduct(const glm::vec3 v1, const glm::vec3 v2, glm::vec3& cross);
     
     bool IsBrushEntity(Entity* pEnt);
     void ParseEntities(const char* pszEntities);

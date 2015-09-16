@@ -56,7 +56,6 @@ void BspRenderer::Init()
 	m_projectionUniform = m_bspShader->GetUniformLocation("projection");
     
     m_lightUniform = m_bspShader->GetUniformLocation("lightPosition");
-    //m_lightFragUniform = m_bspShader->GetUniformLocation("lightPositionFrag");
     
 	m_useUserColorUniform = m_bspShader->GetUniformLocation("useUserColor");
 	m_userColorUniform = m_bspShader->GetUniformLocation("userColor");
@@ -112,11 +111,10 @@ void BspRenderer::Render()
     glUniformMatrix4fv(m_viewUniform, 1, GL_FALSE, glm::value_ptr(m_camera->View()));
 	glUniformMatrix4fv(m_projectionUniform, 1, GL_FALSE, glm::value_ptr(m_camera->Projection()));
     
-    //glUniform3fv(m_cameraUniform, 1, glm::value_ptr(m_camera->Position()));
-    glUniform3fv(m_lightUniform, 1, glm::value_ptr(glm::vec3(449.5f, -1907.3f, 462.9f)));
+    glUniform3fv(m_lightUniform, 1, glm::value_ptr(glm::vec3(-626.0f, -4289.3f, 375.5f)));
     
 	//glUniform1i(m_useUserColorUniform, GL_TRUE);
-	glUniform3f(m_userColorUniform, 0.5f, 0.2f, 0.3f);
+	//glUniform3f(m_userColorUniform, 0.5f, 0.2f, 0.3f);
 		
 	if (!m_bWireframe)
 		glDrawElements(GL_TRIANGLES, m_bsp->worldSize, GL_UNSIGNED_INT, 0);
@@ -126,7 +124,7 @@ void BspRenderer::Render()
     
 	glDrawElements(GL_LINE_LOOP, m_bsp->worldSize, GL_UNSIGNED_INT, 0);
 	
-	m_bsp->RenderBrushEntities(m_modelUniform, m_userColorUniform);
+	m_bsp->RenderBrushEntities(m_modelUniform, m_userColorUniform, m_useUserColorUniform);
 	//m_bsp->RenderProps(m_modelUniform, m_userColorUniform); 
 	
     
