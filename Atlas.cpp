@@ -79,7 +79,8 @@ Atlas::Atlas(Font font, int fontSize)
 
 	/* We require 1 byte alignment when uploading texture data */
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-
+    glPixelStorei(GL_PACK_ALIGNMENT, 1);
+    
 	/* Paste all glyph bitmaps into the texture, remembering the offset */
 	int ox = 0;
 	int oy = 0;

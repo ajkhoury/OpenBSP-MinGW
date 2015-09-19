@@ -6,17 +6,23 @@
                    projectFiles="true">
       <itemPath>Atlas.h</itemPath>
       <itemPath>Bsp.h</itemPath>
+      <itemPath>BspDef.h</itemPath>
       <itemPath>BspRenderer.h</itemPath>
       <itemPath>Camera.h</itemPath>
       <itemPath>Color.h</itemPath>
       <itemPath>Engine.h</itemPath>
       <itemPath>Entity.h</itemPath>
       <itemPath>Font.h</itemPath>
+      <itemPath>Image.h</itemPath>
+      <itemPath>lib/LightMap.h</itemPath>
+      <itemPath>LightMap.h</itemPath>
       <itemPath>Main.h</itemPath>
+      <itemPath>Rect.h</itemPath>
       <itemPath>Shader.h</itemPath>
       <itemPath>ShaderManager.h</itemPath>
       <itemPath>SharedDefs.h</itemPath>
       <itemPath>TextRenderer.h</itemPath>
+      <itemPath>Texture.h</itemPath>
       <itemPath>Utils.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -61,10 +67,13 @@
       <itemPath>Engine.cpp</itemPath>
       <itemPath>Entity.cpp</itemPath>
       <itemPath>Font.cpp</itemPath>
+      <itemPath>Image.cpp</itemPath>
+      <itemPath>LightMap.cpp</itemPath>
       <itemPath>Main.cpp</itemPath>
       <itemPath>Shader.cpp</itemPath>
       <itemPath>ShaderManager.cpp</itemPath>
       <itemPath>TextRenderer.cpp</itemPath>
+      <itemPath>Texture.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -161,6 +170,8 @@
       </item>
       <item path="Bsp.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="BspDef.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="BspRenderer.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="BspRenderer.h" ex="false" tool="3" flavor2="0">
@@ -185,9 +196,19 @@
       </item>
       <item path="Font.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Image.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Image.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="LightMap.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="LightMap.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Main.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Main.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Rect.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Shader.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -202,6 +223,10 @@
       <item path="TextRenderer.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TextRenderer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Texture.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Texture.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Utils.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -238,6 +263,8 @@
       <item path="lib/GLFW/glfw3dll.a" ex="false" tool="3" flavor2="0">
       </item>
       <item path="lib/GLFW/libglfw3.a" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/LightMap.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="text_shader.frag" ex="false" tool="3" flavor2="0">
       </item>
@@ -293,6 +320,8 @@
       </item>
       <item path="Bsp.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="BspDef.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="BspRenderer.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="BspRenderer.h" ex="false" tool="3" flavor2="0">
@@ -317,9 +346,19 @@
       </item>
       <item path="Font.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Image.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Image.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="LightMap.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="LightMap.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Main.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Main.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Rect.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Shader.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -334,6 +373,10 @@
       <item path="TextRenderer.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TextRenderer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Texture.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Texture.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Utils.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -370,6 +413,8 @@
       <item path="lib/GLFW/glfw3dll.a" ex="false" tool="3" flavor2="0">
       </item>
       <item path="lib/GLFW/libglfw3.a" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/LightMap.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="text_shader.frag" ex="false" tool="3" flavor2="0">
       </item>

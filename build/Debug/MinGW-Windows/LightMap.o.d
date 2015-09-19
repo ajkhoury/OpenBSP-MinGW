@@ -1,5 +1,5 @@
-build/Debug/MinGW-Windows/BspRenderer.o: BspRenderer.cpp BspRenderer.h \
- Bsp.h include/GLEW/glew.h glm/glm/glm.hpp glm/glm/detail/_fixes.hpp \
+build/Debug/MinGW-Windows/LightMap.o: LightMap.cpp LightMap.h Image.h \
+ Rect.h include/GLEW/glew.h glm/glm/glm.hpp glm/glm/detail/_fixes.hpp \
  glm/glm/fwd.hpp glm/glm/detail/type_int.hpp glm/glm/detail/setup.hpp \
  glm/glm/detail/type_float.hpp glm/glm/detail/type_vec.hpp \
  glm/glm/detail/precision.hpp glm/glm/detail/type_mat.hpp \
@@ -36,25 +36,13 @@ build/Debug/MinGW-Windows/BspRenderer.o: BspRenderer.cpp BspRenderer.h \
  glm/glm/detail/func_geometric.inl glm/glm/matrix.hpp \
  glm/glm/detail/func_matrix.hpp glm/glm/detail/func_matrix.inl \
  glm/glm/vector_relational.hpp glm/glm/integer.hpp \
- glm/glm/detail/func_integer.hpp glm/glm/detail/func_integer.inl \
- glm/glm/gtc/matrix_transform.hpp glm/glm/gtc/../gtc/constants.hpp \
- glm/glm/gtc/../gtc/constants.inl glm/glm/gtc/matrix_transform.inl \
- glm/glm/gtc/type_ptr.hpp glm/glm/gtc/../gtc/quaternion.hpp \
- glm/glm/gtc/../gtc/quaternion.inl glm/glm/gtc/type_ptr.inl Utils.h \
- Entity.h Camera.h glm/glm/gtx/rotate_vector.hpp \
- glm/glm/gtx/../gtx/transform.hpp glm/glm/gtx/../gtx/transform.inl \
- glm/glm/gtx/rotate_vector.inl Shader.h TextRenderer.h \
- include/GLFW/glfw3.h Font.h shareddefs.h include/Freetype/ft2build.h \
- include/Freetype/config/ftheader.h include/Freetype/freetype.h \
- include/Freetype/config/ftconfig.h include/Freetype/config/ftoption.h \
- include/Freetype/config/ftstdlib.h include/Freetype/fttypes.h \
- include/Freetype/ftsystem.h include/Freetype/ftimage.h \
- include/Freetype/fterrors.h include/Freetype/ftmoderr.h \
- include/Freetype/fterrdef.h Atlas.h ShaderManager.h Color.h
+ glm/glm/detail/func_integer.hpp glm/glm/detail/func_integer.inl
 
-BspRenderer.h:
+LightMap.h:
 
-Bsp.h:
+Image.h:
+
+Rect.h:
 
 include/GLEW/glew.h:
 
@@ -207,73 +195,3 @@ glm/glm/integer.hpp:
 glm/glm/detail/func_integer.hpp:
 
 glm/glm/detail/func_integer.inl:
-
-glm/glm/gtc/matrix_transform.hpp:
-
-glm/glm/gtc/../gtc/constants.hpp:
-
-glm/glm/gtc/../gtc/constants.inl:
-
-glm/glm/gtc/matrix_transform.inl:
-
-glm/glm/gtc/type_ptr.hpp:
-
-glm/glm/gtc/../gtc/quaternion.hpp:
-
-glm/glm/gtc/../gtc/quaternion.inl:
-
-glm/glm/gtc/type_ptr.inl:
-
-Utils.h:
-
-Entity.h:
-
-Camera.h:
-
-glm/glm/gtx/rotate_vector.hpp:
-
-glm/glm/gtx/../gtx/transform.hpp:
-
-glm/glm/gtx/../gtx/transform.inl:
-
-glm/glm/gtx/rotate_vector.inl:
-
-Shader.h:
-
-TextRenderer.h:
-
-include/GLFW/glfw3.h:
-
-Font.h:
-
-shareddefs.h:
-
-include/Freetype/ft2build.h:
-
-include/Freetype/config/ftheader.h:
-
-include/Freetype/freetype.h:
-
-include/Freetype/config/ftconfig.h:
-
-include/Freetype/config/ftoption.h:
-
-include/Freetype/config/ftstdlib.h:
-
-include/Freetype/fttypes.h:
-
-include/Freetype/ftsystem.h:
-
-include/Freetype/ftimage.h:
-
-include/Freetype/fterrors.h:
-
-include/Freetype/ftmoderr.h:
-
-include/Freetype/fterrdef.h:
-
-Atlas.h:
-
-ShaderManager.h:
-
-Color.h:

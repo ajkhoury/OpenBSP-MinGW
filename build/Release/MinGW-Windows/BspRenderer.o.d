@@ -50,7 +50,7 @@ build/Release/MinGW-Windows/BspRenderer.o: BspRenderer.cpp BspRenderer.h \
  include/Freetype/config/ftstdlib.h include/Freetype/fttypes.h \
  include/Freetype/ftsystem.h include/Freetype/ftimage.h \
  include/Freetype/fterrors.h include/Freetype/ftmoderr.h \
- include/Freetype/fterrdef.h Atlas.h ShaderManager.h Color.h
+ include/Freetype/fterrdef.h Atlas.h Image.h ShaderManager.h Color.h
 
 BspRenderer.h:
 
@@ -273,6 +273,8 @@ include/Freetype/ftmoderr.h:
 include/Freetype/fterrdef.h:
 
 Atlas.h:
+
+Image.h:
 
 ShaderManager.h:
 

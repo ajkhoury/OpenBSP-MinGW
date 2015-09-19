@@ -40,6 +40,7 @@ private:
 	GLint m_projectionUniform;
     
 	GLint m_lightUniform;
+    GLint m_cameraUniform;
     
 	GLint m_useUserColorUniform;
 	GLint m_userColorUniform;

@@ -77,17 +77,37 @@ Bsp::Bsp(const char* fp)
 	printf("Reading model lump... ");
 	ReadLump(map, models, LUMP_MODELS);
 	printf("done.\n");
+    
+    printf("Reading texture info lump... ");
+    ReadLump(map, texInfo, LUMP_TEXINFO);
+    printf("done.\n");
+    
+    printf("Reading texture data lump... ");
+    ReadLump(map, texData, LUMP_TEXDATA);
+    printf("done.\n");
+    
+    pnLightmapLookUp = (GLuint*)malloc(sizeof(GLuint) * faces.size());
+    
+    unsigned char* pLightMapData = (unsigned char*)malloc(header.lumps[LUMP_LIGHTING].length);
+    // Seek to the position in the file that stores the lightmap data
+    map.seekg(header.lumps[LUMP_LIGHTING].offset, std::ios_base::beg);
+    // Read in the lightmap data
+    map.read((char*)pLightMapData, header.lumps[LUMP_LIGHTING].length);
+    
+    LoadLightMaps(pLightMapData);
+    free(pLightMapData);
 
 	/* Entity Operations */
 	char* pszEntityBuffer = (char*)malloc(header.lumps[LUMP_ENTITIES].length);
 	// Seek to the position in the file that stores the entity information
 	map.seekg(header.lumps[LUMP_ENTITIES].offset, std::ios_base::beg);
-	// Read in the Entities
+	// Read in the Entity data
 	map.read(pszEntityBuffer, header.lumps[LUMP_ENTITIES].length);
+    
 	// Parse the string and create the pEntities
 	ParseEntities(pszEntityBuffer);
 	// delete the allocated entity buffer
-	delete[] pszEntityBuffer;
+	free(pszEntityBuffer);
 
 	
 	/* Game Lumps */
@@ -136,11 +156,154 @@ Bsp::Bsp(const char* fp)
 	//	}
 	//}
 	
-	
-	// close the BSP file
 	map.close();
 	
 	normals.resize(vertices.size(), glm::vec3(0,0,0));
+}
+
+void Bsp::AdjustTextureToPowerOfTwo(Image* pImg)
+{
+    //if (GLEE_ARB_texture_non_power_of_two)
+        //return;
+
+    if (((pImg->nWidth & (pImg->nWidth - 1)) == 0) && ((pImg->nHeight & (pImg->nHeight - 1)) == 0))
+        return;
+
+    glPixelStorei(GL_PACK_ALIGNMENT, 1);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+    int nPOT = 1;
+    while (nPOT < pImg->nHeight || nPOT < pImg->nWidth)
+        nPOT *= 2;
+
+    // Scale image
+    unsigned char* pNewData = (unsigned char*)malloc(nPOT * nPOT * pImg->nChannels * sizeof(unsigned char));
+
+    gluScaleImage(pImg->nChannels == 4 ? GL_RGBA : GL_RGB, pImg->nWidth, pImg->nHeight, GL_UNSIGNED_BYTE, pImg->pData, nPOT, nPOT, GL_UNSIGNED_BYTE, pNewData);
+
+    free(pImg->pData);
+    pImg->nWidth = nPOT;
+    pImg->nHeight = nPOT;
+    pImg->pData = pNewData;
+}
+
+void Bsp::LoadLightMaps(unsigned char* pLightMapData)
+{
+    int nLoadedData = 0;
+    int nLoadedLightmaps = 0;
+    //int nErrors = 0;
+
+    for (int i = 0; i < faces.size(); i++)
+    {
+        if (faces[i].styles[0] == 0 && (signed)faces[i].lightOfs >= -1)
+        {
+            //Allocate pLightmapCoords
+            pLightmapCoords = (TexCoords*)malloc(sizeof(TexCoords) * faces[i].numEdges);
+
+            /* *********** QRAD ********** */
+            float fMinU = 999999;
+            float fMinV = 999999;
+            float fMaxU = -99999;
+            float fMaxV = -99999;
+
+            TexInfo info = texInfo[faces[i].texInfo];
+            
+            for (int j = 0; j < faces[i].numEdges; j++)
+            {
+                int iEdge = surfEdges[faces[i].firstEdge + j];
+                glm::vec3 vertex;
+                if (iEdge >= 0)
+                    vertex = vertices[edges[iEdge].vert[0]];
+                else
+                    vertex = vertices[edges[-iEdge].vert[1]];
+
+                float fU = info.lightmapVecs[0][0] * vertex.x + info.lightmapVecs[0][1] * vertex.y + info.lightmapVecs[0][2] * vertex.z + info.lightmapVecs[0][3]; //DotProduct(texInfo.vS, vertex) + texInfo.fSShift;
+                if (fU < fMinU)
+                    fMinU = fU;
+                if (fU > fMaxU)
+                    fMaxU = fU;
+
+                float fV = info.lightmapVecs[1][0] * vertex.x + info.lightmapVecs[1][1] * vertex.y + info.lightmapVecs[1][2] * vertex.z + info.lightmapVecs[1][3];
+                if (fV < fMinV)
+                    fMinV = fV;
+                if (fV > fMaxV)
+                    fMaxV = fV;
+            }
+
+            int nWidth = (int)(ceil(fMaxU / 16.0f) - floor(fMinU / 16.0f)) + 1;
+            int nHeight = (int)(ceil(fMaxV / 16.0f) - floor(fMinV / 16.0f)) + 1;
+
+            /* *********** end QRAD ********* */
+
+            /* http://www.gamedev.net/community/forums/topic.asp?topic_id=538713 (last refresh: 20.02.2010) */
+
+            float fMidPolyU = (float)(fMinU + fMaxU) / 2.0f;
+            float fMidPolyV = (float)(fMinV + fMaxV) / 2.0f;
+            float fMidTexU  = (float)(nWidth) / 2.0f;
+            float fMidTexV  = (float)(nHeight) / 2.0f;
+
+            for (int j = 0; j < faces[i].numEdges; ++j)
+            {
+                
+                int iEdge = surfEdges[faces[i].firstEdge + j];
+                glm::vec3 vertex;
+                if (iEdge >= 0)
+                    vertex = vertices[edges[iEdge].vert[0]];
+                else
+                    vertex = vertices[edges[-iEdge].vert[1]];
+
+                float fU =  info.lightmapVecs[0][0] * vertex.x + 
+                            info.lightmapVecs[0][1] * vertex.y + 
+                            info.lightmapVecs[0][2] * vertex.z + info.lightmapVecs[0][3];
+                
+                float fV =  info.lightmapVecs[1][0] * vertex.x + 
+                            info.lightmapVecs[1][1] * vertex.y + 
+                            info.lightmapVecs[1][2] * vertex.z + info.lightmapVecs[1][3];
+
+                float fLightMapU = fMidTexU + (fU - fMidPolyU) / 16.0f;
+                float fLightMapV = fMidTexV + (fV - fMidPolyV) / 16.0f;
+
+                pLightmapCoords[j].fS = fLightMapU / (float)nWidth;
+                pLightmapCoords[j].fT = fLightMapV / (float)nHeight;
+            }
+
+            /* end http://www.gamedev.net/community/forums/topic.asp?topic_id=538713 */
+
+            // Find unbound texture slots
+            glGenTextures(1, &pnLightmapLookUp[i]);
+            
+            Image* pImg = new Image(3, nWidth, nHeight);
+            memcpy(pImg->pData, &pLightMapData[faces[i].lightOfs], nWidth * nHeight * 3 * sizeof(unsigned char));
+
+            AdjustTextureToPowerOfTwo(pImg);
+
+            // Bind the texture
+            glBindTexture(GL_TEXTURE_2D, pnLightmapLookUp[i]);
+
+            // Set up Texture Filtering Parameters
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+            glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, pImg->nWidth, pImg->nHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, pImg->pData);
+
+            nLoadedLightmaps++;
+            //printf("#%4d Loaded lightmap %2d x %2d\n", nLoadedLightmaps, nWidth, nHeight);
+        
+            nLoadedData += nWidth * nHeight * 3;
+        }
+        else
+        {
+            pnLightmapLookUp[i] = 0;
+        }
+    }
+    
+    printf("Loaded %d lightmaps, lightmapdatadiff: %d Bytes ", nLoadedLightmaps, nLoadedData - header.lumps[LUMP_LIGHTING].length);
+    if ((nLoadedData - header.lumps[LUMP_LIGHTING].length) == 0)
+        printf("OK\n");
+    else
+        printf("ERRORS\n");
 }
 
 void Bsp::LoadMapDetails(Camera* cam)
@@ -217,45 +380,56 @@ void Bsp::LoadLeaf(int leaf)
 
 void Bsp::LoadFace(int face)
 {
+    if (faces[face].styles[0] == 0xFF)
+        return;
+    
 	// key indices for each face
-	int hub; // if it is the first run through the first vertex is the "hub" index that all of the triangles in the plane will refer to
+	int vertPoint;
+    int rootPoint; // if it is the first run through the first vertex is the "hub" index that all of the triangles in the plane will refer to
 	int firstPoint; // the first point after the hub
 	int secondPoint; // last point to create a full triangle
+    
+    // normal
+    glm::vec3 vNormal = planes[faces[face].planeIndex].normal;
+    if (faces[face].side)
+        vNormal = -vNormal;
 
     // loop through every single edge in a face, this will end up making a triangle fan
 	for (int x = 0; x < faces[face].numEdges; x++) 
-	{
-		int edgeIndex = surfEdges[faces[face].firstEdge + x];
-		if (edgeIndex < 0)
-		{
-			if (x == 0)
-				hub = edges[-edgeIndex].vert[1];
-			firstPoint = edges[-edgeIndex].vert[1]; 
-			secondPoint = edges[-edgeIndex].vert[0]; 
-		}
-		else
-		{
-			if (x == 0)
-				hub = edges[edgeIndex].vert[0];
-			firstPoint = edges[edgeIndex].vert[0]; 
-			secondPoint = edges[edgeIndex].vert[1]; 
-		}
-	
-        // normal
-        glm::vec3 vNormal = planes[faces[face].planeIndex].normal;
-        //if (faces[face].side)
-           // vNormal = -vNormal;
+	{ 
+        int edgeIndex = surfEdges[faces[face].firstEdge + x];
+        Edge edge = edges[abs(edgeIndex)];
+        bool reverse = (edgeIndex >= 0);
         
-        normals[hub] = vNormal;
-        normals[firstPoint] = vNormal;
-        normals[secondPoint] = vNormal;
+        if (x == 0)
+        {
+            rootPoint = edge.vert[reverse?0:1];
+            vertPoint = edge.vert[reverse?1:0];
+        }
+        else 
+        {
+            vertPoint = edge.vert[reverse?0:1];
+            if(vertPoint == rootPoint)
+                continue;
+            else 
+                firstPoint = vertPoint;
+            
+            vertPoint = edge.vert[reverse?1:0];
+            if (vertPoint == rootPoint)
+                continue;
+            else 
+                secondPoint = vertPoint;
+            
+            normals[rootPoint] = vNormal;
+            normals[firstPoint] = vNormal;
+            normals[secondPoint] = vNormal;
 
-		// push back every index 
-		indices.push_back(hub);
-		indices.push_back(firstPoint);
-		indices.push_back(secondPoint);
+            // push back every index 
+            indices.push_back(rootPoint);
+            indices.push_back(firstPoint);
+            indices.push_back(secondPoint);
+        }   
 	}
-
 	indices.push_back(-1); // once we are done rendering our plane we put in our primitive restart index to start a new plane
 }
 
@@ -301,37 +475,37 @@ int Bsp::WalkBSPTree(glm::vec3 pos, int node)
  * There must be something wrong. HELP ME. */
 void Bsp::LoadProps() 
 {
-	for (int i = 0; i < m_propInfo.size(); i++)
+	for (int i = 0; i < propInfo.size(); i++)
 	{
-		m_propInfo[i].startIndex = indices.size() + 1;
+		propInfo[i].startIndex = indices.size() + 1;
 		
 		glm::mat4 modelMatrix;
-		modelMatrix = glm::translate(glm::mat4(1.0f), m_propInfo[i].origin);
-		printf("angles: %f %f %f\n", m_propInfo[i].angles.x, m_propInfo[i].angles.y, m_propInfo[i].angles.z);
+		modelMatrix = glm::translate(glm::mat4(1.0f), propInfo[i].origin);
+		printf("angles: %f %f %f\n", propInfo[i].angles.x, propInfo[i].angles.y, propInfo[i].angles.z);
 		//modelMatrix = glm::rotate(modelMatrix, glm::radians(m_propInfo[i].angles.z), glm::vec3(1,0,0));
 		//modelMatrix = glm::rotate(modelMatrix, glm::radians(m_propInfo[i].angles.x), glm::vec3(0,1,0));
 		//modelMatrix = glm::rotate(modelMatrix, glm::radians(m_propInfo[i].angles.y), glm::vec3(0,0,1));
 		
-		m_propInfo[i].matrix = modelMatrix;
+		propInfo[i].matrix = modelMatrix;
 		
-		for (int j = 0; j < m_propInfo[i].leafCount; j++)
+		for (int j = 0; j < propInfo[i].leafCount; j++)
 		{
-			LoadLeaf(pStaticPropLeaf[m_propInfo[i].firstLeaf + j].leaf);
+			LoadLeaf(pStaticPropLeaf[propInfo[i].firstLeaf + j].leaf);
 		}
 		
-		m_propInfo[i].length = indices.size() - m_propInfo[i].startIndex;
+		propInfo[i].length = indices.size() - propInfo[i].startIndex;
 		
-		m_props[m_propInfo[i].name] = m_propInfo[i]; 
+		props[propInfo[i].name] = propInfo[i]; 
 	}
 }
 
 void Bsp::RenderProps(int uniformModel, int uniformColor)
 {
-	for (int i = 0; i < m_propInfo.size(); i++)
+	for (int i = 0; i < propInfo.size(); i++)
 	{
-		PropInfo info = m_propInfo[i];		
-		std::map<const char*, PropInfo>::iterator it = m_props.find(info.name);
-		if (it == m_props.end())
+		PropInfo info = propInfo[i];		
+		std::map<const char*, PropInfo>::iterator it = props.find(info.name);
+		if (it == props.end())
 			continue;
 		
 		PropInfo propInfo = it->second;
@@ -401,7 +575,7 @@ void Bsp::RenderBrushEntities(int uniformModel, int uniformColor, int useUserCol
         //glUniform4f(uniformColor, 1.0f, 1.0f, 1.0f, 1.0f); // white
         //glDrawElements(GL_TRIANGLES, info.length, GL_UNSIGNED_INT, (void*)(info.startIndex * sizeof(GLuint)));
         glUniform1i(useUserColorUniform, GL_TRUE);
-        glUniform4fv(uniformColor, 1, glm::value_ptr(glm::vec4(0.0f, 0.0f, 0.75f, 1.0f))); // blue
+        glUniform4f(uniformColor, 0.75f, 0.0f, 0.75f, 1.0f); // purp
         glDrawElements(GL_LINE_LOOP, info.length, GL_UNSIGNED_INT, (void*)(info.startIndex * sizeof(GLuint)));
         glUniform1i(useUserColorUniform, GL_FALSE);
 	}

@@ -50,7 +50,7 @@ build/Debug/MinGW-Windows/Engine.o: Engine.cpp Engine.h Bsp.h \
  include/Freetype/config/ftstdlib.h include/Freetype/fttypes.h \
  include/Freetype/ftsystem.h include/Freetype/ftimage.h \
  include/Freetype/fterrors.h include/Freetype/ftmoderr.h \
- include/Freetype/fterrdef.h Atlas.h SharedDefs.h
+ include/Freetype/fterrdef.h Atlas.h Image.h Rect.h BspDef.h SharedDefs.h
 
 Engine.h:
 
@@ -273,5 +273,11 @@ include/Freetype/ftmoderr.h:
 include/Freetype/fterrdef.h:
 
 Atlas.h:
+
+Image.h:
+
+Rect.h:
+
+BspDef.h:
 
 SharedDefs.h:

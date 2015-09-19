@@ -3,32 +3,34 @@
 uniform bool useUserColor;
 uniform vec4 userColor;
 
-out vec3 outColor;
-
-in vec3 normalVector;
-in vec3 worldPosition;
-in vec3 eyeDirection;
-in vec3 lightDirection;
-
 uniform vec3 lightPosition;
+
+out vec4 outColor;
+
+in vec4 normalVector;
+in vec4 worldPosition;
+in vec4 eyeDirection;
+in vec4 lightDirection;
 
 void main()
 {
-    if (!useUserColor)
+    if (useUserColor)
     {
-        // For individual lights
-        //vec3 lightColor = vec3(1, 1, 1);
-        float lightPower = 3.0f;
+        outColor = userColor;
+    } 
+    else
+    {
+        vec4 diffuse = vec4(1.0f, 1.0f, 1.0f, 1.0f);
+        vec4 ambient = vec4(0.1f, 0.1f, 0.1f, 1.0f) * diffuse;
+        vec4 specular = vec4(0.4f, 0.4f, 0.4f, 1.0f);
 
-        vec3 diffuse = vec3(1, 1, 1);
-        vec3 ambient = vec3(0.1, 0.1, 0.1) * diffuse;
-        vec3 specular = vec3(0.4, 0.4, 0.4);
+        //vec4 final_color = diffuse * ambient
 
-        vec3 n = normalize( normalVector );
-        vec3 l = normalize( lightDirection );
-        vec3 e = normalize( eyeDirection );
+        vec4 n = normalize( normalVector );
+        vec4 l = normalize( lightDirection );
+        vec4 e = normalize( eyeDirection );
 
-        vec3 spec = vec3(0.0);
+        vec4 spec = vec4(0.0);
 
         float intensity = max(dot(n, l), 0.0);
 
@@ -36,7 +38,7 @@ void main()
         if (intensity > 0.0) 
         {
             // compute the half vector
-            vec3 h = normalize(l + e);  
+            vec4 h = normalize(l + e);  
             // compute the specular term into spec
             float intSpec = max(dot(h, n), 0.0);
             spec = specular * pow(intSpec, 128);
@@ -44,10 +46,4 @@ void main()
 
         outColor =  max(intensity *  diffuse + spec, ambient);
     }
-    else
-    {
-        outColor = userColor.xyz;
-        
-    }
-
 }

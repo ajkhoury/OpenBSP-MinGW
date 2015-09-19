@@ -50,8 +50,8 @@ build/Debug/MinGW-Windows/Main.o: Main.cpp Main.h Engine.h Bsp.h \
  include/Freetype/config/ftstdlib.h include/Freetype/fttypes.h \
  include/Freetype/ftsystem.h include/Freetype/ftimage.h \
  include/Freetype/fterrors.h include/Freetype/ftmoderr.h \
- include/Freetype/fterrdef.h Atlas.h SharedDefs.h ShaderManager.h Color.h \
- BspRenderer.h
+ include/Freetype/fterrdef.h Atlas.h Image.h Rect.h BspDef.h SharedDefs.h \
+ ShaderManager.h Color.h BspRenderer.h
 
 Main.h:
 
@@ -276,6 +276,12 @@ include/Freetype/ftmoderr.h:
 include/Freetype/fterrdef.h:
 
 Atlas.h:
+
+Image.h:
+
+Rect.h:
+
+BspDef.h:
 
 SharedDefs.h:
 

@@ -49,12 +49,12 @@ public:
 		double ty;	// y offset of glyph in texture coordinates
 	} c[128];		// character information
 
-	GLuint GetTexture() { return tex; }
-	GLuint GetSampler() { return sampler; }
+	int GetTexture() { return tex; }
+	int GetSampler() { return sampler; }
 
 private:
-	GLuint tex;		// texture object
-	GLuint sampler;
+	unsigned int tex;		// texture object
+	unsigned int sampler;   // texture sampler
 
 	static const int MAXWIDTH;
 };

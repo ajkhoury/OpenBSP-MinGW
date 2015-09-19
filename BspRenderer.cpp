@@ -113,20 +113,26 @@ void BspRenderer::Render()
     
     glUniform3fv(m_lightUniform, 1, glm::value_ptr(glm::vec3(-626.0f, -4289.3f, 375.5f)));
     
-	//glUniform1i(m_useUserColorUniform, GL_TRUE);
-	//glUniform3f(m_userColorUniform, 0.5f, 0.2f, 0.3f);
+	glUniform1i(m_useUserColorUniform, GL_TRUE);
+    
+	glUniform4f(m_userColorUniform, 0.9f, 0.9f, 0.9f, 1.0f);
 		
 	if (!m_bWireframe)
 		glDrawElements(GL_TRIANGLES, m_bsp->worldSize, GL_UNSIGNED_INT, 0);
-	
-	//glUniform1i(m_useUserColorUniform, GL_TRUE);
-	//glUniform4f(m_userColorUniform, 0.0f, 0.0f, 0.0f, 1.0f);
+    //else
     
-	glDrawElements(GL_LINE_LOOP, m_bsp->worldSize, GL_UNSIGNED_INT, 0);
+	glUniform4f(m_userColorUniform, 0.0f, 0.0f, 1.0f, 1.0f);
+    
+    glDrawElements(GL_LINE_LOOP, m_bsp->worldSize, GL_UNSIGNED_INT, 0);
 	
+	glUniform1i(m_useUserColorUniform, GL_FALSE);
+    
+    glEnable(GL_LINE_SMOOTH);
+    
+
 	m_bsp->RenderBrushEntities(m_modelUniform, m_userColorUniform, m_useUserColorUniform);
 	//m_bsp->RenderProps(m_modelUniform, m_userColorUniform); 
-	
+
     
 	if (m_bBrushEntityNames)
 		m_bsp->RenderBrushEntityNames(m_camera, Color::white);

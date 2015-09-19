@@ -50,7 +50,7 @@ build/Release/MinGW-Windows/Bsp.o: Bsp.cpp Bsp.h include/GLEW/glew.h \
  include/Freetype/config/ftstdlib.h include/Freetype/fttypes.h \
  include/Freetype/ftsystem.h include/Freetype/ftimage.h \
  include/Freetype/fterrors.h include/Freetype/ftmoderr.h \
- include/Freetype/fterrdef.h Atlas.h
+ include/Freetype/fterrdef.h Atlas.h Image.h
 
 Bsp.h:
 
@@ -271,3 +271,5 @@ include/Freetype/ftmoderr.h:
 include/Freetype/fterrdef.h:
 
 Atlas.h:
+
+Image.h:

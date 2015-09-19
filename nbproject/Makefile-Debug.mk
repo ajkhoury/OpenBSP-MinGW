@@ -43,10 +43,13 @@ OBJECTFILES= \
 	${OBJECTDIR}/Engine.o \
 	${OBJECTDIR}/Entity.o \
 	${OBJECTDIR}/Font.o \
+	${OBJECTDIR}/Image.o \
+	${OBJECTDIR}/LightMap.o \
 	${OBJECTDIR}/Main.o \
 	${OBJECTDIR}/Shader.o \
 	${OBJECTDIR}/ShaderManager.o \
-	${OBJECTDIR}/TextRenderer.o
+	${OBJECTDIR}/TextRenderer.o \
+	${OBJECTDIR}/Texture.o
 
 
 # C Compiler Flags
@@ -113,6 +116,16 @@ ${OBJECTDIR}/Font.o: Font.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -D_DEBUG -Iinclude -Iglm -Iinclude/Freetype -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Font.o Font.cpp
 
+${OBJECTDIR}/Image.o: Image.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -D_DEBUG -Iinclude -Iglm -Iinclude/Freetype -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Image.o Image.cpp
+
+${OBJECTDIR}/LightMap.o: LightMap.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -D_DEBUG -Iinclude -Iglm -Iinclude/Freetype -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/LightMap.o LightMap.cpp
+
 ${OBJECTDIR}/Main.o: Main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
@@ -132,6 +145,11 @@ ${OBJECTDIR}/TextRenderer.o: TextRenderer.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -D_DEBUG -Iinclude -Iglm -Iinclude/Freetype -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/TextRenderer.o TextRenderer.cpp
+
+${OBJECTDIR}/Texture.o: Texture.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -D_DEBUG -Iinclude -Iglm -Iinclude/Freetype -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Texture.o Texture.cpp
 
 # Subprojects
 .build-subprojects:
