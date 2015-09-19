@@ -9,20 +9,21 @@
 #define	LIGHTMAP_H
 
 #include "Image.h"
+#include "BspDef.h"
 
 #include "GLEW/glew.h"
 #include "glm/glm.hpp"
 
-class Node 
+class LightMapNode 
 {
 public:
-    Node() : 
+    LightMapNode() : 
     x(0), y(0), 
     width(0), height(0), 
     filled(0) 
     { nodes[0] = NULL; nodes[1] = NULL; }
     
-    Node* nodes[2];
+    LightMapNode* nodes[2];
     int x, y, width, height;
     bool filled;
     
@@ -37,10 +38,10 @@ public:
     LightMap* Init();
     
 private:
-    Node* _allocateRect(int width, int height, Node* node); 
+    LightMapNode* _allocateRect(int width, int height, LightMapNode* node); 
     
     unsigned int texture;
-    Node* rectTree;
+    LightMapNode* rectTree;
     
     static int LIGHTMAP_SIZE;
 };

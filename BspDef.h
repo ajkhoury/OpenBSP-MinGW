@@ -8,6 +8,8 @@
 #ifndef BSPDEF_H
 #define	BSPDEF_H
 
+#include "glm/glm.hpp"
+
 #define HEADER_LUMPS 64
 #define VBSP_HEADER (('P'<<24) + ('S' << 16) + ('B' << 8) + 'V')
 #define SPRP 1936749168

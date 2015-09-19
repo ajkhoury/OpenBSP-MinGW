@@ -1,5 +1,5 @@
 build/Debug/MinGW-Windows/LightMap.o: LightMap.cpp LightMap.h Image.h \
- Rect.h include/GLEW/glew.h glm/glm/glm.hpp glm/glm/detail/_fixes.hpp \
+ Rect.h BspDef.h glm/glm/glm.hpp glm/glm/detail/_fixes.hpp \
  glm/glm/fwd.hpp glm/glm/detail/type_int.hpp glm/glm/detail/setup.hpp \
  glm/glm/detail/type_float.hpp glm/glm/detail/type_vec.hpp \
  glm/glm/detail/precision.hpp glm/glm/detail/type_mat.hpp \
@@ -36,7 +36,8 @@ build/Debug/MinGW-Windows/LightMap.o: LightMap.cpp LightMap.h Image.h \
  glm/glm/detail/func_geometric.inl glm/glm/matrix.hpp \
  glm/glm/detail/func_matrix.hpp glm/glm/detail/func_matrix.inl \
  glm/glm/vector_relational.hpp glm/glm/integer.hpp \
- glm/glm/detail/func_integer.hpp glm/glm/detail/func_integer.inl
+ glm/glm/detail/func_integer.hpp glm/glm/detail/func_integer.inl \
+ include/GLEW/glew.h
 
 LightMap.h:
 
@@ -44,7 +45,7 @@ Image.h:
 
 Rect.h:
 
-include/GLEW/glew.h:
+BspDef.h:
 
 glm/glm/glm.hpp:
 
@@ -195,3 +196,5 @@ glm/glm/integer.hpp:
 glm/glm/detail/func_integer.hpp:
 
 glm/glm/detail/func_integer.inl:
+
+include/GLEW/glew.h:

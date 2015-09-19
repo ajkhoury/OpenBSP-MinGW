@@ -29,7 +29,7 @@ LightMap* LightMap::Init()
     unsigned char whitePixels[16] = {255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255 };
     glTexSubImage2D(GL_TEXTURE_2D, 0, LIGHTMAP_SIZE-2, LIGHTMAP_SIZE-2, 2, 2, GL_RGBA, GL_UNSIGNED_BYTE, whitePixels);
     
-    rectTree = new Node();
+    rectTree = new LightMapNode();
     rectTree->width = LIGHTMAP_SIZE;
     rectTree->height = LIGHTMAP_SIZE;
     
@@ -101,7 +101,7 @@ LightMap* LightMap::Init()
 //    }
 //}
 
-Node* LightMap::_allocateRect(int width, int height, Node* node = NULL) 
+LightMapNode* LightMap::_allocateRect(int width, int height, LightMapNode* node = NULL) 
 {
     if(!node)
         node = this->rectTree;
@@ -109,7 +109,7 @@ Node* LightMap::_allocateRect(int width, int height, Node* node = NULL)
     // Check children node
     if(node->nodes[0] != NULL && node->nodes[1] != NULL)
     { 
-        Node* retNode = this->_allocateRect(width, height, node->nodes[0]);
+        LightMapNode* retNode = this->_allocateRect(width, height, node->nodes[0]);
         if(retNode) 
             return retNode;
         return this->_allocateRect(width, height, node->nodes[1]);
@@ -132,8 +132,7 @@ Node* LightMap::_allocateRect(int width, int height, Node* node = NULL)
 
     // We need to split if we've reached here
     //Node nodes[2];
-    Node node1;
-    Node node2;
+    LightMapNode node1, node2;
 
     // Which way do we split?
     if ((node->width - width) > (node->height - height)) 
@@ -142,16 +141,13 @@ Node* LightMap::_allocateRect(int width, int height, Node* node = NULL)
         node1.y = node->y;
         node1.width = width;
         node1.height = node->height;
-        
         node->nodes[0] = &node1;
         
         node2.x = node->x + width;
         node2.y = node->y;
         node2.width = node->width - width;
         node2.height = node->height;
-       
         node->nodes[1] = &node2;
-        
     } 
     else 
     {
@@ -159,16 +155,13 @@ Node* LightMap::_allocateRect(int width, int height, Node* node = NULL)
         node1.y = node->y;
         node1.width = node->width;
         node1.height = height;
-        
         node->nodes[0] = &node1;
         
         node2.x = node->x;
         node2.y = node->y + height;
         node2.width = node->width;
         node2.height = node->height - height;
-       
         node->nodes[1] = &node2;
-        
     }
     
     return this->_allocateRect(width, height, node->nodes[0]);
