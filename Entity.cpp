@@ -33,13 +33,12 @@ void Entity::ParseProperties(const char* pszProperties)
 	while(true)
 	{
 		pchPos = strchr(pchPos, '"');
-		if(pchPos == NULL)
-			break;
-		else
+
+		if(pchPos != NULL)
 		{
 			nProperties++;
 			pchPos++;
-		}
+		}else break;
 	}
 
 	// There are 4 quotes per line, so this gives the num of lines/entity properties
